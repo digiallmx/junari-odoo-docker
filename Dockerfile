@@ -1,11 +1,12 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # Install System dependencies
 RUN set -x; \
     apt-get update \
     && apt-get install -y curl \
     && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb \
-    && apt-get install -y --no-install-recommends \
+    && DEBIAN_FRONTEND="noninteractive" TZ="Europe/London" \
+    apt-get install -y --no-install-recommends \
     ./wkhtmltox.deb \
     postgresql-client \
     build-essential \
@@ -16,8 +17,10 @@ RUN set -x; \
     libxml2-dev \
     libxslt1-dev \
     libldap2-dev \
+    libpq-dev \
     libssl-dev \
     libsasl2-dev \
+    libjpeg-dev \
     nano \
     git \
     openssh-client \
